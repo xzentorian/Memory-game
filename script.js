@@ -1,12 +1,8 @@
 const startButton = document.querySelector(".start");
 const testButton = document.querySelector(".test");
 const unHideButton = document.querySelector(".unhide");
-
-
-//? do i need this ---> const gridContainer = document.querySelector(".boardGridContainer");
-
 const countdown = document.querySelector(".countdown");
-
+const frontSideOfCard = document.querySelectorAll(".front");
 
 
 let min = 1;
@@ -42,8 +38,32 @@ function timeIsOut(){
 function hideCards(){
    document.querySelectorAll(".back").forEach((item)=>{item.classList.add("hidden")})
 }
-
 hideCards();
+
+function checkIfCardsMatch(){
+
+   // 1) listen for witch card is clicked and add it to isMatchArrary.
+   //! 2) Show the card. <-- do this now.
+   // 3) empty array when 2 cards is clicked.
+   // 4) if cards are a match keep them open otherwise flip them back.
+
+   let nrOfCardsClicked = 0;
+   let isMatch = [];
+ frontSideOfCard.forEach(card => {
+   card.addEventListener("click", function(){
+isMatch.push(card);
+nrOfCardsClicked ++;
+if (nrOfCardsClicked == 2){
+   
+   
+   //isMatch = [];
+}
+console.log(isMatch);
+   })
+ })
+} 
+
+checkIfCardsMatch();
 
  startButton.addEventListener("click", function(){
 
@@ -70,10 +90,8 @@ counter(0.1);
     
  })
 
- let testArray = [];
- document.querySelector(".card1-front").addEventListener("click", function(){
-   consolelog(document.querySelector("card1-back"));
- })
+ 
+ 
 
  testButton.addEventListener("click", function(){
    hideCards();
@@ -83,7 +101,3 @@ unHideButton.addEventListener("click", function(){
   
 })
 
-// when klicked store value of image and when 2 click compare and something.
-
-//TODO: 1) start game  make cards flippable.
-//Todo: 2) game ower when timer is out, klick ok start over
