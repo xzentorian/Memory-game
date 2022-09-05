@@ -8,96 +8,185 @@ const frontSideOfCard = document.querySelectorAll(".front");
 let min = 1;
 let max = 11;
 let numArray = [];
+let clickedCards = [];
+let clickedCardsString = [];
+let checkIfMatchArray = [];
 
 //Counter display!
-function counter(duration){
-const startingminutes = duration;
-let time  = startingminutes * 60;
+function counter(duration) {
+   const startingminutes = duration;
+   let time = startingminutes * 60;
 
-setInterval(updateCountdown,1000);
- 
-function updateCountdown(){
-   const minutes = Math.floor(time/60);
-   let secounds = time % 60;
+   setInterval(updateCountdown, 1000);
 
-   secounds = secounds < 10 ? "0" + secounds : secounds;
-   countdown.innerHTML = `${minutes}:${secounds}`;
-   time --
+   function updateCountdown() {
+      const minutes = Math.floor(time / 60);
+      let secounds = time % 60;
+      secounds = secounds < 10 ? "0" + secounds : secounds;
+      countdown.innerHTML = `${minutes}:${secounds}`;
+      time--
 
-   if(minutes == 0 && secounds == 0){
-      timeIsOut();
+      if (minutes == 0 && secounds == 0) {
+         timeIsOut();
+      }
+   }
+
+   function timeIsOut() {
+      clearInterval(time = 0);
+      countdown.innerHTML = "Timer has stopped"
    }
 }
 
-function timeIsOut(){
-   clearInterval(time = 0);
-   countdown.innerHTML="Timer has stopped"
-}
-}
-
-function hideCards(){
-   document.querySelectorAll(".back").forEach((item)=>{item.classList.add("hidden")})
+function hideCards() {
+   document.querySelectorAll(".back").forEach((item) => { item.classList.add("hidden") })
 }
 hideCards();
 
-function checkIfCardsMatch(){
+let cardsClickedCounter = 0;
 
-   // 1) listen for witch card is clicked and add it to isMatchArrary.
-   //! 2) Show the card. <-- do this now.
+function showCard() {
+   for (let i = 0; i < clickedCards.length; i++) {
+      let cardToString = clickedCards[i].outerHTML;
+      clickedCardsString.push(cardToString)
+      clickedCards = []
+   }
+
+   let cardString1 = clickedCardsString[0];
+   let cardString2 = clickedCardsString[1];
+
+   if (cardsClickedCounter == 1) {
+      let cardNumber1 = cardString1.match(/\d+/g);
+
+      firstClickFrontSide = document.querySelector(`.card${cardNumber1[0]}-front`);
+      firstClickBackSide = document.querySelector(`.card${cardNumber1[0]}-back`);
+
+      firstClickFrontSide.classList.add("hidden");
+      firstClickBackSide.classList.remove("hidden");
+      checkIfMatchArray.push(firstClickBackSide.innerHTML);
+   }
+
+   else if (cardsClickedCounter == 2) {
+
+      let cardNumber2 = cardString2.match(/\d+/g);
+
+      secoundClickFrontside = document.querySelector(`.card${cardNumber2[0]}-front`);
+      secoundClickBackside = document.querySelector(`.card${cardNumber2[0]}-back`);
+
+      secoundClickFrontside.classList.add("hidden");
+      secoundClickBackside.classList.remove("hidden");
+      cardsClickedCounter = 0;
+      checkIfMatchArray.push(secoundClickBackside.innerHTML);
+   }
+
+   checkIfMatch();
+
+}
+
+function checkIfMatch() {
+
+   for (let i = 0; i < checkIfMatchArray.length; i++) {
+      if (i == 2) {
+         checkIfMatchArray.splice(0, 2);
+      }
+   }
+
+   let firstCard = checkIfMatchArray[0];
+   let secoundCard = checkIfMatchArray[1]
+
+   if (cardsClickedCounter == 1) {
+
+      let cardNumber1 = firstCard.match(/\d+/g);
+      checkIfMatchArray.push(cardNumber1[0]);
+      checkIfMatchArray.splice(0, 1)
+
+   } else {
+
+      let cardNumber2 = secoundCard.match(/\d+/g);
+      checkIfMatchArray.push(cardNumber2[0]);
+      checkIfMatchArray.splice(1, 1)
+   }
+   console.log(checkIfMatchArray)
+
+   function tryCardNumbers(tryMatch) {
+      let cardNumbers = tryMatch;
+      let matchingPairs = cardNumbers.every(value => {
+         return checkIfMatchArray.includes(value);
+      });
+
+      console.log(matchingPairs);
+
+      if (matchingPairs == true) {
+         //call a function that does something when a pair is found.
+         foundMatch();
+      }
+
+      else {
+         //call a function when there is no match
+         noMatch();
+      }
+   }
+
+   tryCardNumbers(["1", "2"]);
+   tryCardNumbers(["3", "4"]);
+   tryCardNumbers(["5", "6"]);
+   tryCardNumbers(["7", "8"]);
+   tryCardNumbers(["9", "10"]);
+}
+
+function foundMatch() {
+
+}
+
+function noMatch() {
+   //some awsomne code
+}
+
+function clickedCard() {
+
+   //* 1) listen for witch card is clicked.
+   //*2) Show the card.
    // 3) empty array when 2 cards is clicked.
    // 4) if cards are a match keep them open otherwise flip them back.
 
-   let nrOfCardsClicked = 0;
-   let isMatch = [];
- frontSideOfCard.forEach(card => {
-   card.addEventListener("click", function(){
-isMatch.push(card);
-nrOfCardsClicked ++;
-if (nrOfCardsClicked == 2){
-   
-   
-   //isMatch = [];
-}
-console.log(isMatch);
+   frontSideOfCard.forEach(card => {
+      card.addEventListener("click", function () {
+         cardsClickedCounter++;
+         clickedCards.push(card);
+         showCard();
+      })
    })
- })
-} 
+}
 
-checkIfCardsMatch();
+clickedCard();
 
- startButton.addEventListener("click", function(){
+startButton.addEventListener("click", function () {
+   counter(0.1);
+   for (let i = 1; i < 11; i++) {
+      num = Math.floor(Math.random() * (max - min)) + 1;
 
-counter(0.1); 
-    for (let i = 1; i < 11; i++){
-     num = Math.floor(Math.random() * (max -min)) +1;
-     
-   if(!numArray.includes(num)){
-      numArray.push(num);
-      }else{i--};
-   
-     for (let j = 0; j < numArray.length; j++){
-      randomImage=numArray[j];
-     }
+      if (!numArray.includes(num)) {
+         numArray.push(num);
+      } else { i-- };
 
-      let image =`<img src="/rcs/images/${randomImage}.png">`
-        console.log(numArray);
-     document.querySelector(`.card${i}-back`).innerHTML="";
-     document.querySelector(`.card${i}-back`).insertAdjacentHTML("afterbegin",image) 
-     
+      for (let j = 0; j < numArray.length; j++) {
+         randomImage = numArray[j];
       }
-  
-    numArray = [];
-    
- })
 
- 
- 
+      let image = `<img src="/rcs/images/${randomImage}.png">`
+      console.log(numArray);
+      document.querySelector(`.card${i}-back`).innerHTML = "";
+      document.querySelector(`.card${i}-back`).insertAdjacentHTML("afterbegin", image)
+   }
+   numArray = [];
+})
 
- testButton.addEventListener("click", function(){
+
+
+testButton.addEventListener("click", function () {
    hideCards();
- })
+})
 
-unHideButton.addEventListener("click", function(){
-  
+unHideButton.addEventListener("click", function () {
+
 })
 
