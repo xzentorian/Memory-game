@@ -124,6 +124,7 @@ function checkIfMatch() {
 
       else {
          //call a function when there is no match
+         
          noMatch();
       }
    }
@@ -136,12 +137,16 @@ function checkIfMatch() {
 }
 
 function foundMatch() {
-backSideOfCard.forEach(card => {
-   card.addEventListener()
-})
+//backSideOfCard.forEach(card => {
+  // card.addEventListener()
+//})
+//! 1 thing ty try is try and add aventlisteners, check what types there are.
+//! Another thing to try is to do the show card function again, but backwards... 
 }
 
 function noMatch() {
+
+   // this fires of for every match that is no match, that is 9 times!!! //!fix!!
    //some awsomne code
 }
 
