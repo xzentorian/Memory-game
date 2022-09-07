@@ -3,6 +3,8 @@ const testButton = document.querySelector(".test");
 const unHideButton = document.querySelector(".unhide");
 const countdown = document.querySelector(".countdown");
 const frontSideOfCard = document.querySelectorAll(".front");
+const backSideOfCard = document.querySelectorAll(".back");
+
 
 
 let min = 1;
@@ -134,7 +136,9 @@ function checkIfMatch() {
 }
 
 function foundMatch() {
-
+backSideOfCard.forEach(card => {
+   card.addEventListener()
+})
 }
 
 function noMatch() {
