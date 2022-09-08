@@ -65,6 +65,8 @@ function showCard() {
       firstClickFrontSide.classList.add("hidden");
       firstClickBackSide.classList.remove("hidden");
       checkIfMatchArray.push(firstClickBackSide.innerHTML);
+      
+      
    }
 
    else if (cardsClickedCounter == 2) {
@@ -77,10 +79,15 @@ function showCard() {
       secoundClickFrontside.classList.add("hidden");
       secoundClickBackside.classList.remove("hidden");
       cardsClickedCounter = 0;
-      checkIfMatchArray.push(secoundClickBackside.innerHTML);
+      checkIfMatchArray.push(secoundClickBackside.innerHTML); 
+      //! trying to return this so i can use it to undo showcards();
+      return [firstClickBackSide, firstClickFrontSide, secoundClickBackside, secoundClickFrontside];
+      
    }
-
+   
    checkIfMatch();
+   
+   // console.log(firstClickBackSide)
 
 }
 
@@ -124,7 +131,7 @@ function checkIfMatch() {
 
       else {
          //call a function when there is no match
-         
+
          noMatch();
       }
    }
@@ -137,15 +144,26 @@ function checkIfMatch() {
 }
 
 function foundMatch() {
-//backSideOfCard.forEach(card => {
-  // card.addEventListener()
-//})
-//! 1 thing ty try is try and add aventlisteners, check what types there are.
-//! Another thing to try is to do the show card function again, but backwards... 
+
+   //backSideOfCard.forEach(card => {
+   // card.addEventListener()
+   //})
+
+   //! Another thing to try is to do the show card function again, but backwards... 
+   //! just make it dry.
 }
 
 function noMatch() {
 
+   console.log(firstClickBackSide.classList)
+   if (firstClickBackSide.classList.contains("hidden")) {
+      console.log("do nothing")
+   } else {
+      firstClickBackSide.classList.add("hidden");
+      firstClickFrontSide.classList.remove("hidden");
+      secoundClickBackside.classList.add("hidden");
+      secoundClickFrontside.classList.remove("hidden");
+   }
    // this fires of for every match that is no match, that is 9 times!!! //!fix!!
    //some awsomne code
 }
