@@ -66,7 +66,6 @@ function showCard() {
       firstClickBackSide.classList.remove("hidden");
       checkIfMatchArray.push(firstClickBackSide.innerHTML);
       
-      
    }
 
    else if (cardsClickedCounter == 2) {
@@ -79,17 +78,22 @@ function showCard() {
       secoundClickFrontside.classList.add("hidden");
       secoundClickBackside.classList.remove("hidden");
       cardsClickedCounter = 0;
-      checkIfMatchArray.push(secoundClickBackside.innerHTML); 
-      //! trying to return this so i can use it to undo showcards();
-      return [firstClickBackSide, firstClickFrontSide, secoundClickBackside, secoundClickFrontside];
+      checkIfMatchArray.push(secoundClickBackside.innerHTML);
       
    }
-   
+  
    checkIfMatch();
-   
-   // console.log(firstClickBackSide)
 
+   // console.log(firstClickBackSide)
+   
 }
+
+// Returning values from showCard funtion.
+//! after the first click a varning is fired about the secound click is not defined. <---- fix it! 😘
+function GetCardClickedValue(){
+   return [firstClickBackSide , firstClickFrontSide, secoundClickBackside, secoundClickFrontside]; 
+   }
+
 
 function checkIfMatch() {
 
@@ -116,7 +120,10 @@ function checkIfMatch() {
    }
    console.log(checkIfMatchArray)
 
+   let nrOfFails = 0;
+
    function tryCardNumbers(tryMatch) {
+      
       let cardNumbers = tryMatch;
       let matchingPairs = cardNumbers.every(value => {
          return checkIfMatchArray.includes(value);
@@ -125,14 +132,17 @@ function checkIfMatch() {
       console.log(matchingPairs);
 
       if (matchingPairs == true) {
-         //call a function that does something when a pair is found.
+         // Call a function that does something when a pair is found.
          foundMatch();
       }
 
       else {
-         //call a function when there is no match
-
+         nrOfFails ++;
+         // Call a function when there is no match using a counter to only call it once
+         if(nrOfFails == 5){
+            nrOfFails = 0;
          noMatch();
+         }
       }
    }
 
@@ -143,29 +153,29 @@ function checkIfMatch() {
    tryCardNumbers(["9", "10"]);
 }
 
+//keep the cards visible and change the border color to green.
 function foundMatch() {
-
-   //backSideOfCard.forEach(card => {
-   // card.addEventListener()
-   //})
-
-   //! Another thing to try is to do the show card function again, but backwards... 
-   //! just make it dry.
+   console.log("match");
+   
+   
 }
 
+// hide the cards again after 2 secounds if there is no match!
 function noMatch() {
+ let card = GetCardClickedValue();
+ let firstClickBackSide= card[0];
+ let firstClickFrontSide = card[1];
+ let secoundClickBackside = card [2];
+ let secoundClickFrontside = card[3]
 
-   console.log(firstClickBackSide.classList)
-   if (firstClickBackSide.classList.contains("hidden")) {
-      console.log("do nothing")
-   } else {
-      firstClickBackSide.classList.add("hidden");
-      firstClickFrontSide.classList.remove("hidden");
-      secoundClickBackside.classList.add("hidden");
-      secoundClickFrontside.classList.remove("hidden");
+//console.log(firstClickBackSide, firstClickFrontSide, secoundClickBackside, secoundClickFrontside);
+ for (let i = 0; i < card.length; i++){
+   setTimeout(function () {
+      if(card[i].classList.contains("hidden")){
+         card[i].classList.remove("hidden");
+      }else {card[i].classList.add("hidden")}
+       }, 2000);
    }
-   // this fires of for every match that is no match, that is 9 times!!! //!fix!!
-   //some awsomne code
 }
 
 function clickedCard() {
