@@ -1,10 +1,8 @@
 const startButton = document.querySelector(".start");
-const testButton = document.querySelector(".test");
-const unHideButton = document.querySelector(".unhide");
 const countdown = document.querySelector(".countdown");
 const frontSideOfCard = document.querySelectorAll(".front");
 const backSideOfCard = document.querySelectorAll(".back");
-
+let gameActive = true;
 
 
 let min = 1;
@@ -35,8 +33,18 @@ function counter(duration) {
 
    function timeIsOut() {
       clearInterval(time = 0);
-      countdown.innerHTML = "Timer has stopped"
-   }
+      countdown.innerHTML = "Time is up, you lost!"
+      startButton.innerHTML ="Play again?!"
+      gameActive = false;
+      //!<-----------------------------------------------------------------------------
+      // frontSideOfCard.forEach((item) => {item.addEventListener("click", function(e){
+      //   target = e;
+      //    alert("Hey you gade start the game over stupid!");
+      //    location.reload();
+      // })
+   //    })
+   // }
+   //!-------------------------------------------------------------------------------->
 }
 
 function hideCards() {
@@ -65,7 +73,7 @@ function showCard() {
       firstClickFrontSide.classList.add("hidden");
       firstClickBackSide.classList.remove("hidden");
       checkIfMatchArray.push(firstClickBackSide.innerHTML);
-      
+
    }
 
    else if (cardsClickedCounter == 2) {
@@ -77,22 +85,22 @@ function showCard() {
 
       secoundClickFrontside.classList.add("hidden");
       secoundClickBackside.classList.remove("hidden");
-      cardsClickedCounter = 0;
+      //cardsClickedCounter = 0;
       checkIfMatchArray.push(secoundClickBackside.innerHTML);
-      
    }
-  
+
    checkIfMatch();
-
    // console.log(firstClickBackSide)
-   
 }
-
 // Returning values from showCard funtion.
-//! after the first click a varning is fired about the secound click is not defined. <---- fix it! 😘
-function GetCardClickedValue(){
-   return [firstClickBackSide , firstClickFrontSide, secoundClickBackside, secoundClickFrontside]; 
+function GetCardClickedValue() {
+   try {
+      return [firstClickBackSide, firstClickFrontSide, secoundClickBackside, secoundClickFrontside];
    }
+   catch (error) {
+      console.log("waiting user to click on another card!");
+   }
+}
 
 
 function checkIfMatch() {
@@ -123,7 +131,7 @@ function checkIfMatch() {
    let nrOfFails = 0;
 
    function tryCardNumbers(tryMatch) {
-      
+
       let cardNumbers = tryMatch;
       let matchingPairs = cardNumbers.every(value => {
          return checkIfMatchArray.includes(value);
@@ -137,11 +145,12 @@ function checkIfMatch() {
       }
 
       else {
-         nrOfFails ++;
+         nrOfFails++;
          // Call a function when there is no match using a counter to only call it once
-         if(nrOfFails == 5){
+         if (nrOfFails == 5 && cardsClickedCounter == 2) {
             nrOfFails = 0;
-         noMatch();
+            resetData();
+            noMatch();
          }
       }
    }
@@ -151,30 +160,50 @@ function checkIfMatch() {
    tryCardNumbers(["5", "6"]);
    tryCardNumbers(["7", "8"]);
    tryCardNumbers(["9", "10"]);
+
 }
 
 //keep the cards visible and change the border color to green.
 function foundMatch() {
+   let card = GetCardClickedValue();
+
+   let firstClickBackSide = card[0];
+   let firstClickFrontSide = card[1];
+   let secoundClickBackside = card[2];
+   let secoundClickFrontside = card[3];
+
+   for (let i = 0; i < card.length; i++) {
+      card[i].classList.remove("back");
+      card[i].classList.add("back-match");
+   }
+
    console.log("match");
-   
-   
+   resetData();
+
+}
+
+function resetData() {
+   nrOfFails = 0;
+   cardsClickedCounter = 0;
+   checkIfMatchArray = [];
+   clickedCardsString = [];
 }
 
 // hide the cards again after 2 secounds if there is no match!
 function noMatch() {
- let card = GetCardClickedValue();
- let firstClickBackSide= card[0];
- let firstClickFrontSide = card[1];
- let secoundClickBackside = card [2];
- let secoundClickFrontside = card[3]
+   let card = GetCardClickedValue();
+   let firstClickBackSide = card[0];
+   let firstClickFrontSide = card[1];
+   let secoundClickBackside = card[2];
+   let secoundClickFrontside = card[3];
 
-//console.log(firstClickBackSide, firstClickFrontSide, secoundClickBackside, secoundClickFrontside);
- for (let i = 0; i < card.length; i++){
-   setTimeout(function () {
-      if(card[i].classList.contains("hidden")){
-         card[i].classList.remove("hidden");
-      }else {card[i].classList.add("hidden")}
-       }, 2000);
+   //console.log(firstClickBackSide, firstClickFrontSide, secoundClickBackside, secoundClickFrontside);
+   for (let i = 0; i < card.length; i++) {
+      setTimeout(function () {
+         if (card[i].classList.contains("hidden")) {
+            card[i].classList.remove("hidden");
+         } else { card[i].classList.add("hidden") }
+      }, 2000);
    }
 }
 
@@ -197,6 +226,11 @@ function clickedCard() {
 clickedCard();
 
 startButton.addEventListener("click", function () {
+   if(!gameActive){
+      location.reload();
+     
+   }else{
+   
    counter(0.1);
    for (let i = 1; i < 11; i++) {
       num = Math.floor(Math.random() * (max - min)) + 1;
@@ -215,15 +249,18 @@ startButton.addEventListener("click", function () {
       document.querySelector(`.card${i}-back`).insertAdjacentHTML("afterbegin", image)
    }
    numArray = [];
-})
+
+   //location.reload();
+}})
 
 
 
-testButton.addEventListener("click", function () {
-   hideCards();
-})
+//! when timer stops, nothing should be able to be clicked.
+//! size for phone need to be adjusted.
+//! make shure you cant click enything untill wrongly matched cards are flipped back.
+//! some sort of score keeper maybe.
+//! mayby a cool animation when cards get flipped.
 
-unHideButton.addEventListener("click", function () {
 
-})
+
 
