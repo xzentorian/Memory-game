@@ -108,13 +108,15 @@
     margin-right:auto;
     
     
-   width: 640px;
+    
+   width: 645px;
     grid-template-areas: "header header header header header"
     "card1 card2 card3 card4 card5"
     "card6 card7 card8 card9 card10";
 }
 
 .boardGridContainer > div {
+    
     background-color: rgba(255, 255, 255, 0.8);
     box-shadow: 5px 10px 18px #888888;
     display:flex;
@@ -160,18 +162,23 @@ body{
 }
 
 .buttonContainer{
-    min-width: auto;
+    
+   
    display:flex;
    justify-content: center;
    align-items: center;
    margin-top:50px;
+   min-width:fit-content;
+   width:50px;
+   margin-right:auto;
+   margin-left:auto;
    
    
-   border: solid black 1px;
+   
 }
 
 .start{
-   
+  
   padding: 10px;
   background-color: #2196F3;
   color:rgba(255, 255, 255, 0.8);
@@ -181,4 +188,23 @@ body{
 .start:hover{
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
-/*TODO: make the page for phones
+
+.noClick{
+    pointer-events: none;
+}
+
+@media screen and (max-width: 704px) {
+    .buttonContainer  .boardGridContainer .boardGridContainer > div{
+  width: 100%;
+  
+      }
+     .buttonContainer{
+      width: 704px;
+     }
+     .boardGridContainer{
+      padding-right: 7px;   }
+
+/*    
+TODO: make the page for phones 
+*/
+    

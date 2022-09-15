@@ -12,12 +12,25 @@ let clickedCards = [];
 let clickedCardsString = [];
 let checkIfMatchArray = [];
 
+function toggleCardsClickable() {
+   frontSideOfCard.forEach((item) => {
+      if (item.classList.contains("noClick")) {
+         item.classList.remove("noClick")
+         console.log("clickable");
+      }
+      else {
+         item.classList.add("noClick")
+         console.log("NOT clickable!")
+      }
+   })
+}
+
 //Counter display!
 function counter(duration) {
    const startingminutes = duration;
-   let time = startingminutes * 60;
+   let time = startingminutes * 600;
 
-   setInterval(updateCountdown, 1000);
+   const myInterval = setInterval(updateCountdown, 1000);
 
    function updateCountdown() {
       const minutes = Math.floor(time / 60);
@@ -31,21 +44,20 @@ function counter(duration) {
       }
    }
 
+   //Stop user from clicking on moore cards while no gameplay
    function timeIsOut() {
-      clearInterval(time = 0);
+      clearInterval(myInterval);
+   
       countdown.innerHTML = "Time is up, you lost!"
-      startButton.innerHTML ="Play again?!"
+      startButton.innerHTML = "Play again?!"
       gameActive = false;
-      //!<-----------------------------------------------------------------------------
-      // frontSideOfCard.forEach((item) => {item.addEventListener("click", function(e){
-      //   target = e;
-      //    alert("Hey you gade start the game over stupid!");
-      //    location.reload();
-      // })
-   //    })
-   // }
-   //!-------------------------------------------------------------------------------->
+
+      toggleCardsClickable();
+      
+   }
 }
+
+
 
 function hideCards() {
    document.querySelectorAll(".back").forEach((item) => { item.classList.add("hidden") })
@@ -164,7 +176,16 @@ function checkIfMatch() {
 }
 
 //keep the cards visible and change the border color to green.
+let matchingPairs =0;
 function foundMatch() {
+   for (i = 1; i != matchingPairs; i++){ //! <------------------------------------------------------
+      console.log(i);
+      if ( i == 5){
+        timeIsOut();
+      }
+      
+   }
+
    let card = GetCardClickedValue();
 
    let firstClickBackSide = card[0];
@@ -176,8 +197,9 @@ function foundMatch() {
       card[i].classList.remove("back");
       card[i].classList.add("back-match");
    }
+matchingPairs ++;
 
-   console.log("match");
+   console.log(`match  ${matchingPairs}`);
    resetData();
 
 }
@@ -191,6 +213,7 @@ function resetData() {
 
 // hide the cards again after 2 secounds if there is no match!
 function noMatch() {
+   toggleCardsClickable();
    let card = GetCardClickedValue();
    let firstClickBackSide = card[0];
    let firstClickFrontSide = card[1];
@@ -200,11 +223,18 @@ function noMatch() {
    //console.log(firstClickBackSide, firstClickFrontSide, secoundClickBackside, secoundClickFrontside);
    for (let i = 0; i < card.length; i++) {
       setTimeout(function () {
+         
          if (card[i].classList.contains("hidden")) {
             card[i].classList.remove("hidden");
-         } else { card[i].classList.add("hidden") }
+           
+         } else { card[i].classList.add("hidden");   }
+         
       }, 2000);
+      
    }
+   setTimeout (function () {
+      toggleCardsClickable();
+   }, 2000);
 }
 
 function clickedCard() {
@@ -225,39 +255,48 @@ function clickedCard() {
 
 clickedCard();
 
+
+
+
+
+toggleCardsClickable();
+
+
 startButton.addEventListener("click", function () {
-   if(!gameActive){
+   if (!gameActive) {
       location.reload();
-     
-   }else{
-   
-   counter(0.1);
-   for (let i = 1; i < 11; i++) {
-      num = Math.floor(Math.random() * (max - min)) + 1;
 
-      if (!numArray.includes(num)) {
-         numArray.push(num);
-      } else { i-- };
 
-      for (let j = 0; j < numArray.length; j++) {
-         randomImage = numArray[j];
+   } else {
+      toggleCardsClickable();
+      counter(0.1);
+      for (let i = 1; i < 11; i++) {
+         num = Math.floor(Math.random() * (max - min)) + 1;
+
+         if (!numArray.includes(num)) {
+            numArray.push(num);
+         } else { i-- };
+
+         for (let j = 0; j < numArray.length; j++) {
+            randomImage = numArray[j];
+         }
+
+         let image = `<img src="/rcs/images/${randomImage}.png">`
+         console.log(numArray);
+         document.querySelector(`.card${i}-back`).innerHTML = "";
+         document.querySelector(`.card${i}-back`).insertAdjacentHTML("afterbegin", image)
       }
+      numArray = [];
 
-      let image = `<img src="/rcs/images/${randomImage}.png">`
-      console.log(numArray);
-      document.querySelector(`.card${i}-back`).innerHTML = "";
-      document.querySelector(`.card${i}-back`).insertAdjacentHTML("afterbegin", image)
+      //location.reload();
    }
-   numArray = [];
-
-   //location.reload();
-}})
+})
 
 
 
-//! when timer stops, nothing should be able to be clicked.
-//! size for phone need to be adjusted.
-//! make shure you cant click enything untill wrongly matched cards are flipped back.
+
+
+// when time is out do some scoring
 //! some sort of score keeper maybe.
 //! mayby a cool animation when cards get flipped.
 
