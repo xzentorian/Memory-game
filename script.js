@@ -326,7 +326,7 @@ startButton.addEventListener("click", function () {
             randomImage = numArray[j];
          }
 
-         let image = `<img src="Memory-game/rcs/images/${randomImage}.png">`
+         let image = `<img src="rcs/images/${randomImage}.png">`
          console.log(numArray);
          document.querySelector(`.card${i}-back`).innerHTML = "";
          document.querySelector(`.card${i}-back`).insertAdjacentHTML("afterbegin", image)
