@@ -167,8 +167,6 @@ body{
 }
 
 .buttonContainer{
-    
-   
    display:flex;
    justify-content: center;
    align-items: center;
@@ -177,19 +175,16 @@ body{
    width:50px;
    margin-right:auto;
    margin-left:auto;
-   
-   
-   
 }
 
 .start{
-  
   padding: 10px;
   background-color: #2196F3;
   color:rgba(255, 255, 255, 0.8);
   border: none;
   font-size: 24px;
 }
+
 .start:hover{
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
@@ -206,10 +201,7 @@ body{
      .buttonContainer{
       width: 704px;
      }
-     .boardGridContainer{
-      padding-right: 7px;   }
-
-
+    
 
 /*    
 TODO: make the page for phones 

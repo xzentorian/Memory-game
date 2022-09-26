@@ -3,7 +3,6 @@ const countdown = document.querySelector(".countdown");
 const frontSideOfCard = document.querySelectorAll(".front");
 const backSideOfCard = document.querySelectorAll(".back");
 const score = document.querySelector(".score");
-const cheat = document.querySelector(".cheat");
 let gameActive = true;
 
 let min = 1;
@@ -339,9 +338,6 @@ startButton.addEventListener("click", function () {
 
 })
 
-cheat.addEventListener("click", function() {
-   matchingPairs = 4;
-   foundMatch()});
 
 
 
