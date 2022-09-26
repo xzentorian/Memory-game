@@ -55,7 +55,7 @@ to name one, instead of showind and hiding divs for showing and hiding cards i c
 there are several improvements that can be made, for instance a better scoring representaion
 player vs player and so forth.
 
-I dont amadgen i will come back to this and make any improvements since this was for learning only.
+I dont amadgen i will come back to this and make any improvements since this was for learning only.<br>
 but for fun i just might.
 
 
