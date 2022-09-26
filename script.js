@@ -20,18 +20,14 @@ if (score.textContent = "0" && oldScore == null) {
 else {
    score.textContent = oldScore;
 }
-console.log(score.textContent)
-console.log(oldScore)
 
 function toggleCardsClickable() {
    frontSideOfCard.forEach((item) => {
       if (item.classList.contains("noClick")) {
          item.classList.remove("noClick")
-         console.log("clickable");
       }
       else {
          item.classList.add("noClick")
-         console.log("NOT clickable!")
       }
    })
 }
@@ -52,7 +48,6 @@ function counter(duration) {
       countdown.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time left: ${minutes}:${secounds}`;
       time--
       timeScore = time + 1;
-      console.log(timeScore);
       if (minutes == 0 && secounds == 0) {
          timeIsOut();
       }
@@ -69,14 +64,14 @@ function counter(duration) {
       toggleCardsClickable();
 
    }
-   stopCounter = timeIsOut;  //?<----------------------------------------------
+
+   stopCounter = timeIsOut;
 }
 
 
 function showScore() {
 
-   stopCounter(); //? <-------------this finally worked by declaring a varible in global scope
-   //? and asigning the function to the global varible.
+   stopCounter();
 
    countdown.innerHTML = ""
 
@@ -86,10 +81,11 @@ function showScore() {
 
    else if (timeScore > score.textContent && score.textContent != 0) {
       score.textContent = timeScore;
-      console.log("it is bigger as in a better score")
       countdown.innerHTML = `&nbsp;&nbsp;&nbsp; new high score!!!`;
-
-   }else {countdown.innerHTML="&nbsp; try again!"}
+   }
+   else {
+      countdown.innerHTML = "&nbsp; try again!"
+   }
 
    // saves oldscore for comparison to the new score after location reaload
    sessionStorage.setItem("oldScore", score.textContent);
@@ -126,11 +122,8 @@ function showCard() {
       firstClickFrontSide.classList.add("hidden");
       firstClickBackSide.classList.remove("hidden");
       checkIfMatchArray.push(firstClickBackSide.innerHTML);
-
    }
-
    else if (cardsClickedCounter == 2) {
-
       let cardNumber2 = cardString2.match(/\d+/g);
 
       secoundClickFrontside = document.querySelector(`.card${cardNumber2[0]}-front`);
@@ -138,12 +131,10 @@ function showCard() {
 
       secoundClickFrontside.classList.add("hidden");
       secoundClickBackside.classList.remove("hidden");
-      //cardsClickedCounter = 0;
       checkIfMatchArray.push(secoundClickBackside.innerHTML);
    }
 
    checkIfMatch();
-   // console.log(firstClickBackSide)
 }
 // Returning values from showCard funtion.
 function GetCardClickedValue() {
@@ -155,7 +146,6 @@ function GetCardClickedValue() {
       console.log("waiting user to click on another card!");
    }
 }
-
 
 function checkIfMatch() {
 
@@ -175,14 +165,11 @@ function checkIfMatch() {
       checkIfMatchArray.splice(0, 1)
 
    }
-   
    else {
-
       let cardNumber2 = secoundCard.match(/\d+/g);
       checkIfMatchArray.push(cardNumber2[0]);
       checkIfMatchArray.splice(1, 1)
    }
-   console.log(checkIfMatchArray)
 
    let nrOfFails = 0;
 
@@ -192,8 +179,6 @@ function checkIfMatch() {
       let matchingPairs = cardNumbers.every(value => {
          return checkIfMatchArray.includes(value);
       });
-
-      console.log(matchingPairs);
 
       if (matchingPairs == true) {
          // Call a function that does something when a pair is found.
@@ -220,10 +205,6 @@ function checkIfMatch() {
 //keep the cards visible and change the border color to green.
 let matchingPairs = 0;
 function foundMatch() {
-
-
-
-
    let card = GetCardClickedValue();
 
    let firstClickBackSide = card[0];
@@ -266,14 +247,16 @@ function noMatch() {
    let secoundClickBackside = card[2];
    let secoundClickFrontside = card[3];
 
-   //console.log(firstClickBackSide, firstClickFrontSide, secoundClickBackside, secoundClickFrontside);
    for (let i = 0; i < card.length; i++) {
       setTimeout(function () {
 
          if (card[i].classList.contains("hidden")) {
             card[i].classList.remove("hidden");
 
-         } else { card[i].classList.add("hidden"); }
+         }
+         else {
+            card[i].classList.add("hidden");
+         }
 
       }, 2000);
 
@@ -285,8 +268,8 @@ function noMatch() {
 
 function clickedCard() {
 
-   //* 1) listen for witch card is clicked.
-   //*2) Show the card.
+   // 1) listen for witch card is clicked.
+   // 2) Show the card.
    // 3) empty array when 2 cards is clicked.
    // 4) if cards are a match keep them open otherwise flip them back.
 
@@ -331,19 +314,11 @@ startButton.addEventListener("click", function () {
          document.querySelector(`.card${i}-back`).insertAdjacentHTML("afterbegin", image)
       }
       numArray = [];
-
-      //location.reload();
    }
-
-
 })
 
 
 
-
-// when time is out do some scoring
-//! some sort of score keeper maybe.
-//! mayby a cool animation when cards get flipped.
 
 
 
