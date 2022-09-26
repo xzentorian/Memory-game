@@ -1,6 +1,9 @@
  Pairgame 1.0
  ============
 
+
+
+
  # Motivation and purpose
 
 
@@ -11,8 +14,12 @@ The motivation for making this application was purly for self-education although
 
 # So what did i learn?
 
+
+
+
 Its difficult to pinpoint exactly what i learned as i think it was many things.
 but atleast here are a few things...
+
 
 ***How to acces functions from other functions***
 
@@ -30,6 +37,9 @@ but atleast here are a few things...
 
 # The hard way!
 
+
+
+
 I realize there is problely several moore easier ways i could have done this.
 
 to name one, instead of showind and hiding divs for showing and hiding cards i could have used css instead.
@@ -37,6 +47,9 @@ to name one, instead of showind and hiding divs for showing and hiding cards i c
 ---
 
 # Final words
+
+
+
 
 **Improvments, Features, updates**
 there are several improvements that can be made, for instance a better scoring representaion
